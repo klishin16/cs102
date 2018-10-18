@@ -37,6 +37,17 @@ def gcd(a, b):
     return(a+b);
 
 
+def bezout_recursive(a, b):
+    '''A recursive implementation of extended Euclidean algorithm.
+    Returns integer x, y and gcd(a, b) for Bezout equation:
+        ax + by = gcd(a, b).
+    '''
+    if not b:
+        return (1, 0, a)
+    y, x, g = bezout_recursive(b, a%b)
+    return (x, y - (a // b) * x, g)
+
+
 def multiplicative_inverse(e, phi):
     """
     Euclid's extended algorithm for finding the multiplicative
@@ -44,8 +55,15 @@ def multiplicative_inverse(e, phi):
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
+   # (x, y, g) = bezout_recursive(phi, e)
+   # d = y
+   # if(d < 0):
+   #     d += phi
+   # return d
+    (x, y, g) = bezout_recursive(phi, e)
+    d = y % phi    
+        
+    return d;
 
 
 def generate_keypair(p, q):
