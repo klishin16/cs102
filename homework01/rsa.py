@@ -12,7 +12,13 @@ def is_prime(n):
     False
     """
     # PUT YOUR CODE HERE
-    pass
+    determinator = 2;
+    count = 0;
+    while determinator < n:
+        if n%determinator == 0:
+            return False;
+        determinator+=1;
+    return True;
 
 
 def gcd(a, b):
