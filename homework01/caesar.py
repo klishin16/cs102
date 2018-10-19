@@ -9,7 +9,6 @@ def encrypt_caesar(plaintext, shift):
     >>> encrypt_caesar("")
     ''
     """
-    # PUT YOUR CODE HERE
     ciphertext = ''
     for char in plaintext:
         if (char >= 'a' and char <= 'z') or (char >= 'A' and char <= 'Z'):
@@ -33,7 +32,6 @@ def decrypt_caesar(ciphertext, shift):
     >>> decrypt_caesar("")
     ''
     """
-    # PUT YOUR CODE HERE
     plaintext = ''
     for char in ciphertext:
         if (char >= 'a' and char <= 'z') or (char >= 'A' and char <= 'Z'):
