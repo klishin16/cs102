@@ -11,7 +11,6 @@ def is_prime(n):
     >>> is_prime(8)
     False
     """
-    # PUT YOUR CODE HERE
     determinator = 2;
     count = 0;
     while determinator < n:
@@ -30,12 +29,11 @@ def gcd(a, b):
     """
     while a!=0 and b!=0:
         if a > b:
-            a = a % b;
+            a = a % b
         else:
-            b = b % a;
+            b = b % a
 
-    return(a+b);
-
+    return(a + b)
 
 def bezout_recursive(a, b):
     '''A recursive implementation of extended Euclidean algorithm.
@@ -126,4 +124,3 @@ if __name__ == '__main__':
     print(''.join(map(lambda x: str(x), encrypted_msg)))
     print("Decrypting message with public key ", public, " . . .")
     print("Your message is:")
-print(decrypt(public, encrypted_msg))
