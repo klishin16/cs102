@@ -39,7 +39,7 @@ def get_row(values, pos):
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    pass
+    return  values[pos[0]]
 
 
 def get_col(values, pos):
