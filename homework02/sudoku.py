@@ -100,7 +100,10 @@ def find_possible_values(grid, pos):
     >>> values == {'2', '5', '9'}
     True
     """
-    pass
+    s = set(get_block(grid, pos))
+    s.update(get_row(grid, pos))
+    s.update(get_col(grid, pos))
+    return set('123456789') - s
 
 
 def solve(grid):
