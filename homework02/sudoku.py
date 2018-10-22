@@ -67,7 +67,12 @@ def get_block(values, pos):
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    pass
+    s = []
+    row, col = pos
+    for i in range((row//3)*3, (row//3)*3 + 3):
+        for j in range((col//3)*3, (col//3)*3 + 3):
+            s.append(values[i][j])
+    return s
 
 
 def find_empty_positions(grid):
