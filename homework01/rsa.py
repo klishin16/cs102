@@ -11,13 +11,13 @@ def is_prime(n):
     >>> is_prime(8)
     False
     """
-    determinator = 2;
-    count = 0;
+    determinator = 2
+    count = 0
     while determinator < n:
         if n%determinator == 0:
-            return False;
-        determinator+=1;
-    return True;
+            return False
+        determinator+=1
+    return True
 
 
 def gcd(a, b):
@@ -32,8 +32,7 @@ def gcd(a, b):
             a = a % b
         else:
             b = b % a
-
-    return(a + b)
+    return a + b
 
 def bezout_recursive(a, b):
     '''A recursive implementation of extended Euclidean algorithm.
@@ -53,15 +52,9 @@ def multiplicative_inverse(e, phi):
     >>> multiplicative_inverse(7, 40)
     23
     """
-   # (x, y, g) = bezout_recursive(phi, e)
-   # d = y
-   # if(d < 0):
-   #     d += phi
-   # return d
     (x, y, g) = bezout_recursive(phi, e)
     d = y % phi    
-        
-    return d;
+    return d
 
 
 def generate_keypair(p, q):
