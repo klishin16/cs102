@@ -51,7 +51,10 @@ def get_col(values, pos):
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    pass
+    col = []
+    for i in range(0, len(values)):
+        col.append(values[i][pos[1]])
+    return col
 
 
 def get_block(values, pos):
