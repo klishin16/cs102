@@ -133,7 +133,24 @@ def solve(grid):
 def check_solution(solution):
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    pass
+    base = set('123456789')
+    for i in range(len(solution)):
+        s = set(get_row(solution, (i, 0)))
+        if s != base :
+            return False
+
+    for j in range(len(solution)):
+        s = set(get_col(solution, (0, j)))
+        if s != base:
+            return False
+
+    for i in range(0, 7, 3):
+        for j in range(0, 7, 3):
+            s = set(get_block(solution, (i, j)))
+            if s != base:
+                return False
+
+    return True
 
 
 def generate_sudoku(N):
