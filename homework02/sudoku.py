@@ -24,7 +24,10 @@ def group(values, n):
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    pass
+    matrix = []
+    for i in range(0, len(values), n):
+        matrix.append(values[i:i+n])
+    return matrix
 
 
 def get_row(values, pos):
