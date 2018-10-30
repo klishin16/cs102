@@ -1,4 +1,4 @@
-def encrypt_caesar(plaintext, shift):
+def encrypt_caesar(plaintext :str, shift :int) -> str:
     """
     >>> encrypt_caesar("PYTHON")
     'SBWKRQ'
@@ -21,7 +21,7 @@ def encrypt_caesar(plaintext, shift):
     return ciphertext
 
 
-def decrypt_caesar(ciphertext, shift):
+def decrypt_caesar(ciphertext :str, shift :int) -> str:
     """
     >>> decrypt_caesar("SBWKRQ")
     'PYTHON'
