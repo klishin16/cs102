@@ -26,10 +26,7 @@ def group(values :list, n :int) -> list:
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    matrix = []
-    for i in range(0, len(values), n):
-        matrix.append(values[i:i+n])
-    return matrix
+    return [values[i:i+n] for i in range(0, len(values), n)]
 
 
 def get_row(values :list, pos :list) -> list:
@@ -41,7 +38,7 @@ def get_row(values :list, pos :list) -> list:
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    return  values[pos[0]]
+    return values[pos[0]]
 
 
 def get_col(values :list, pos :list) -> list:
@@ -53,10 +50,7 @@ def get_col(values :list, pos :list) -> list:
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    col = []
-    for i in range(0, len(values)):
-        col.append(values[i][pos[1]])
-    return col
+    return [values[i][pos[1]] for i in range(0, len(values))]
 
 
 def get_block(values :list, pos :list) -> list:
@@ -69,15 +63,15 @@ def get_block(values :list, pos :list) -> list:
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    s = []
+    elements = []
     row, col = pos
     for i in range((row//3)*3, (row//3)*3 + 3):
         for j in range((col//3)*3, (col//3)*3 + 3):
-            s.append(values[i][j])
-    return s
+            elements.append(values[i][j])
+    return elements
 
 
-def find_empty_positions(grid :list):
+def find_empty_positions(grid :list) -> list:
     """ Найти первую свободную позицию в пазле
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
     (0, 2)
@@ -89,7 +83,7 @@ def find_empty_positions(grid :list):
     for i in range(0, len(grid)):
         for j in range(0, len(grid)):
             if grid[i][j] == '.':
-                return (i, j)
+                return [i, j]
 
 
 def find_possible_values(grid :list, pos :list) -> set:
@@ -102,10 +96,10 @@ def find_possible_values(grid :list, pos :list) -> set:
     >>> values == {'2', '5', '9'}
     True
     """
-    s = set(get_block(grid, pos))
-    s.update(get_row(grid, pos))
-    s.update(get_col(grid, pos))
-    return set('123456789') - s
+    values = set(get_block(grid, pos))
+    values.update(get_row(grid, pos))
+    values.update(get_col(grid, pos))
+    return set('123456789') - values
 
 
 def solve(grid :list):
@@ -123,8 +117,8 @@ def solve(grid :list):
     possition = find_empty_positions(grid)
     if possition is None:
         return grid
-    for x in find_possible_values(grid, possition):
-        grid[possition[0]][possition[1]] = x
+    for value in find_possible_values(grid, possition):
+        grid[possition[0]][possition[1]] = value
         solution = solve(grid)
         if not solution is None :
             return solution
@@ -137,19 +131,19 @@ def check_solution(solution :list) -> bool:
     # TODO: Add doctests with bad puzzles
     base = set('123456789')
     for i in range(len(solution)):
-        s = set(get_row(solution, [i, 0]))
-        if s != base :
+        values = set(get_row(solution, [i, 0]))
+        if values != base :
             return False
 
     for j in range(len(solution)):
-        s = set(get_col(solution, [0, j]))
-        if s != base:
+        values = set(get_col(solution, [0, j]))
+        if values != base:
             return False
 
     for i in range(0, 7, 3):
         for j in range(0, 7, 3):
-            s = set(get_block(solution, [i, j]))
-            if s != base:
+            values = set(get_block(solution, [i, j]))
+            if values != base:
                 return False
 
     return True
