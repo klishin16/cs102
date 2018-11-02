@@ -1,4 +1,5 @@
 import random
+from typing import Union
 
 def read_sudoku(filename : str) -> list:
     """ Прочитать Судоку из указанного файла """
@@ -71,7 +72,7 @@ def get_block(values :list, pos :list) -> list:
     return elements
 
 
-def find_empty_positions(grid :list) -> list:
+def find_empty_positions(grid :list) -> Union[list, None]:
     """ Найти первую свободную позицию в пазле
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
     (0, 2)
@@ -84,6 +85,8 @@ def find_empty_positions(grid :list) -> list:
         for j in range(0, len(grid)):
             if grid[i][j] == '.':
                 return [i, j]
+    else:
+        return None
 
 
 def find_possible_values(grid :list, pos :list) -> set:
