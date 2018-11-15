@@ -105,7 +105,21 @@ class GameOfLife:
         :return: Обновленное игровое поле
         """
         new_clist = []
-        # PUT YOUR CODE HERE
+
+        for row in range(len(cell_list)):
+            line = []
+            for col in range(len(cell_list[0])):
+                neighbours = self.get_neighbours((row, col))
+                number_of_neighbours = 0
+                for neighbour in neighbours:
+                    if neighbour == 1:
+                        number_of_neighbours += 1
+                if (cell_list[row][col] == 1 and number_of_neighbours >= 2 and number_of_neighbours <= 3) or (cell_list[row][col] == 0 and number_of_neighbours == 3):
+                    line.append(1)
+                else:
+                    line.append(0)
+            new_clist.append(line)
+        self.clist = new_clist
         return self.clist
 
 if __name__ == '__main__':
