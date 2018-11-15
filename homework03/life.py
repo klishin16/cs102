@@ -119,6 +119,7 @@ class GameOfLife:
         self.clist = new_clist
         return self.clist
 
+
 if __name__ == '__main__':
     game = GameOfLife(320, 240, 20)
     game.run()
