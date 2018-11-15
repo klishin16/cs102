@@ -72,11 +72,17 @@ class GameOfLife:
                 row = []
         return self.clist
 
-    def draw_cell_list(self, clist):
+    def draw_cell_list(self, rects):
         """ Отображение списка клеток
         :param rects: Список клеток для отрисовки, представленный в виде матрицы
         """
-        pass
+        for row in range(len(rects)):
+            for col in range(len(rects[0])):
+                rect = (self.cell_size * col, self.cell_size * row, self.cell_size, self.cell_size)
+                if rects[row][col] == 1:
+                    pygame.draw.rect(self.screen, pygame.Color('green'), rect)
+                else:
+                    pygame.draw.rect(self.screen, pygame.Color('white'), rect)
 
     def get_neighbours(self, cell):
         """ Вернуть список соседей для указанной ячейки
