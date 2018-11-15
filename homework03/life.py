@@ -63,7 +63,13 @@ class GameOfLife:
         :return: Список клеток, представленный в виде матрицы
         """
         self.clist = []
-        # PUT YOUR CODE HERE
+        if randomize is True:
+            row = []
+            for i in range(self.cell_height):
+                for j in range(self.cell_width):
+                    row.append(random.randrange(0, 2))
+                self.clist.append(row)
+                row = []
         return self.clist
 
     def draw_cell_list(self, clist):
