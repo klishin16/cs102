@@ -6,7 +6,7 @@ from copy import deepcopy
 
 class GameOfLife:
 
-    def __init__(self, width=640, height=480, cell_size=40, speed=10):
+    def __init__(self, width: int=640, height: int=480, cell_size: int=40, speed: int=10) -> None:
         self.width = width
         self.height = height
         self.cell_size = cell_size
@@ -23,7 +23,7 @@ class GameOfLife:
         # Скорость протекания игры
         self.speed = speed
 
-    def draw_grid(self):
+    def draw_grid(self) -> None:
         """ Отрисовать сетку """
         for x in range(0, self.width, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color('black'),
@@ -40,7 +40,6 @@ class GameOfLife:
         self.screen.fill(pygame.Color('white'))
 
         self.cellList = CellList(self.cell_height, self.cell_width, randomize=True)
-        #self.cellList = CellList.from_file("game.txt")
 
         running = True
         while running:
@@ -51,14 +50,12 @@ class GameOfLife:
             self.draw_cell_list(self.cellList)
             self.draw_grid()
             self.cellList.update()
-            # Выполнение одного шага игры (обновление состояния ячеек)
-            # PUT YOUR CODE HERE
 
             pygame.display.flip()
             clock.tick(self.speed)
         pygame.quit()
 
-    def draw_cell_list(self, cellList):
+    def draw_cell_list(self, cellList: list) -> None:
         """ Отображение списка клеток
         :param rects: Список клеток для отрисовки, представленный в виде матрицы
         """
@@ -72,18 +69,18 @@ class GameOfLife:
 
 class Cell:
 
-    def __init__(self, row, col, state=False):
+    def __init__(self, row: int, col: int, state=False) -> None:
         self.row = row
         self.col = col
         self.state = state
 
-    def is_alive(self):
+    def is_alive(self) -> bool:
         return self.state
 
 
 class CellList:
 
-    def __init__(self, nrows, ncols, randomize=False):
+    def __init__(self, nrows: int, ncols: int, randomize=False) -> None:
         self.nrows = nrows
         self.ncols = ncols
         self.randomize = randomize
@@ -98,7 +95,7 @@ class CellList:
 
         self.clist = fillList
 
-    def get_neighbours(self, myCell) -> list:
+    def get_neighbours(self, myCell: tuple) -> list:
         neighbours = []
         row, col = myCell
         for cell in self:
@@ -106,7 +103,7 @@ class CellList:
                 neighbours.append(cell.state)
         return neighbours
 
-    def update(self):
+    def update(self) -> list:
         new_clist = deepcopy(self)
         index = 0
         for cell in new_clist:
@@ -126,7 +123,7 @@ class CellList:
         self.index = 0
         return self
 
-    def __next__(self):
+    def __next__(self) -> tuple:
         if self.index == len(self.clist):
             raise StopIteration
         cell = self.clist[self.index]
@@ -138,7 +135,7 @@ class CellList:
         return str(out)
 
     @classmethod
-    def from_file(self, filename):
+    def from_file(self, filename: str) -> list:
         file = open(filename, 'r')
         data = file.read().split()
         grid = []
