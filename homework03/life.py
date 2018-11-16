@@ -37,7 +37,7 @@ class GameOfLife:
         clock = pygame.time.Clock()
         pygame.display.set_caption('Game of Life')
         self.screen.fill(pygame.Color('white'))
-        self.cell_list(randomize=False)
+        self.cell_list(randomize=True)
 
         running = True
         while running:
