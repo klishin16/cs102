@@ -49,7 +49,7 @@ class GameOfLife:
 
             self.draw_cell_list(self.cellList)
             self.draw_grid()
-            self.cellList.update()
+            self.cellList = self.cellList.update()
 
             pygame.display.flip()
             clock.tick(self.speed)
@@ -61,7 +61,7 @@ class GameOfLife:
         """
         for cell in cellList:
             rect = (self.cell_size * cell.col, self.cell_size * cell.row, self.cell_size, self.cell_size)
-            if cell.state == 1:
+            if cell.is_alive() is True:
                 pygame.draw.rect(self.screen, pygame.Color('green'), rect)
             else:
                 pygame.draw.rect(self.screen, pygame.Color('white'), rect)
@@ -80,7 +80,7 @@ class Cell:
 
 class CellList:
 
-    def __init__(self, nrows: int, ncols: int, randomize=False) -> None:
+    def __init__(self, nrows: int, ncols: int, randomize=True) -> None:
         self.nrows = nrows
         self.ncols = ncols
         self.randomize = randomize
@@ -91,39 +91,40 @@ class CellList:
                 if (self.randomize is True):
                     fillList.append(Cell(rows, cols, random.randrange(0, 2)))
                 else:
-                    fillList.append(Cell(rows, cols))
-
+                    fillList.append(Cell(rows, cols, 0))
         self.clist = fillList
 
-    def get_neighbours(self, myCell: tuple) -> list:
+    def get_neighbours(self, myCell: Cell) -> list:
         neighbours = []
-        row, col = myCell
-        for cell in self:
+        row = myCell.row
+        col = myCell.col
+        for cell in self.clist:
             if abs(row - cell.row) <= 1 and abs(col - cell.col) <= 1 and abs(row - cell.row) + abs(col - cell.col) != 0:
-                neighbours.append(cell.state)
+                neighbours.append(cell)
         return neighbours
 
     def update(self) -> list:
         new_clist = deepcopy(self)
         index = 0
+        cellList = CellList(self.nrows, self.ncols, False)
         for cell in new_clist:
-            neighbours = self.get_neighbours((cell.row, cell.col))
+            neighbours = self.get_neighbours(cell)
             number_of_neighbours = 0
             for neighbour in neighbours:
-                if neighbour == 1:
+                if neighbour.state == 1:
                     number_of_neighbours += 1
             if (cell.state == 1 and number_of_neighbours >= 2 and number_of_neighbours <= 3) or (cell.state == 0 and number_of_neighbours == 3):
-                self.clist[index].state = 1
+                cellList.clist[index].state = 1
             else:
-                self.clist[index].state = 0
+                cellList.clist[index].state = 0
             index += 1
-        return self.clist
+        return cellList
 
     def __iter__(self):
         self.index = 0
         return self
 
-    def __next__(self) -> tuple:
+    def __next__(self) -> Cell:
         if self.index == len(self.clist):
             raise StopIteration
         cell = self.clist[self.index]
@@ -137,13 +138,16 @@ class CellList:
     @classmethod
     def from_file(self, filename: str) -> list:
         file = open(filename, 'r')
-        data = file.read().split()
-        grid = []
-        for row in data:
-            grid.extend([int(cell) for cell in row])
-        return grid
+        data = [line.rstrip() for line in file]
+        cList = []
+        for row in range(0, len(data)):
+            for col in range(0, len(data[0])):
+                cList.append(Cell(row, col, int(data[row][col])))
+        cellList = CellList(len(data), len(data[0]), False)
+        cellList.clist = cList
+        return cellList
 
 
 if __name__ == '__main__':
-    game = GameOfLife(480, 480, 40, speed=10)
+    game = GameOfLife(480, 240, 20, speed=7)
     game.run()
