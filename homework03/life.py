@@ -37,7 +37,7 @@ class GameOfLife:
         clock = pygame.time.Clock()
         pygame.display.set_caption('Game of Life')
         self.screen.fill(pygame.Color('white'))
-        self.cell_list(randomize=True)
+        self.cell_list(randomize=False)
 
         running = True
         while running:
@@ -47,7 +47,8 @@ class GameOfLife:
 
             self.draw_cell_list(self.clist)
             self.draw_grid()
-            self.update_cell_list(self.clist)
+
+            self.clist = self.update_cell_list(self.clist)
 
             pygame.display.flip()
             clock.tick(self.speed)
@@ -67,6 +68,8 @@ class GameOfLife:
                     row.append(random.randrange(0, 2))
                 self.clist.append(row)
                 row = []
+        else:
+            self.clist = [[0] * self.cell_width for _ in range(self.cell_height)]
         return self.clist
 
     def draw_cell_list(self, rects: list) -> None:
@@ -116,8 +119,7 @@ class GameOfLife:
                 else:
                     line.append(0)
             new_clist.append(line)
-        self.clist = new_clist
-        return self.clist
+        return new_clist
 
 
 if __name__ == '__main__':
