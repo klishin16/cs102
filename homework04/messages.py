@@ -49,8 +49,3 @@ def plotly_messages_freq(dates: Dates, freq: Frequencies) -> None:
 
     data = [go.Scatter(x=dates, y=freq)]
     py.plot(data)
-
-
-if __name__ == '__main__':
-    dates, frequencies = count_dates_from_messages(messages_get_history(14445552))
-    plotly_messages_freq(dates, frequencies)
