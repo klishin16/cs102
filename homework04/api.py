@@ -40,7 +40,7 @@ def get_friends(user_id, fields='bdate'):
         'fields': fields
     }
     response = get(url, params=query_params)
-    return response.json()
+    return response.json()['response']['items']
 
 
 def messages_get_history(user_id, offset=0, count=300):
