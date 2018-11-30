@@ -29,6 +29,3 @@ def age_predict(user_id: int) -> Optional[float]:
         return age
     else:
         return None
-
-if __name__ == '__main__':
-    print(age_predict(1))
