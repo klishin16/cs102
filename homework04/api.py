@@ -23,7 +23,7 @@ def get(url: str, params: dict={}, timeout: int=5, max_retries: int=5, backoff_f
                 time.sleep(backoff_factor * (2 ** repeat))
 
 
-def get_friends(user_id, fields):
+def get_friends(user_id, fields='bdate'):
     """ Returns a list of user IDs or detailed information about a user's friends """
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert isinstance(fields, str), "fields must be string"

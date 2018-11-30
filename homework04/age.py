@@ -1,4 +1,3 @@
-import datetime as dt
 from statistics import median
 from typing import Optional
 from datetime import datetime, date
@@ -17,15 +16,19 @@ def age_predict(user_id: int) -> Optional[float]:
     assert isinstance(user_id, int), "user_id must be positive integer"
     assert user_id > 0, "user_id must be positive integer"
 
-    data = get_friends(user_id, "bdate")["response"]["items"]
-    friends = [User(**friend) for friend in data]
+    data = get_friends(user_id, 'bdate')
+    print(type(data))
+    friends = [User(**friend) for friend in data['response']['items']]
     ages = []
     for friend in friends:
         if friend.bdate is not None:
             if len(friend.bdate) >= 8:
-                ages.append((datetime.today() - datetime.strptime(friend.bdate, "%d.%m.%Y")).days // 365.25)
+                ages.append((datetime.today() - datetime.strptime(friend.bdate, '%d.%m.%Y')).days // 365.25)
     if len(ages) > 0:
         age = median(ages)
         return age
     else:
-        return 0
+        return None
+
+if __name__ == '__main__':
+    print(age_predict(1))
