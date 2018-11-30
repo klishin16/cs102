@@ -17,7 +17,6 @@ def age_predict(user_id: int) -> Optional[float]:
     assert user_id > 0, "user_id must be positive integer"
 
     data = get_friends(user_id, 'bdate')
-    print(type(data))
     friends = [User(**friend) for friend in data['response']['items']]
     ages = []
     for friend in friends:
