@@ -13,17 +13,15 @@ def get_network(users_ids: list, as_edgelist=True) -> Union[List[List[int]], Lis
     for id in range(len(users_ids)):
         time.sleep(0.4)
         response = get_friends(users_ids[id], 'bdate')
-        if response.get('error'):
-            continue
-        else:
-            friends = [friend["id"] for friend in response['response']['items']]
-            for user in range(len(users_ids)):
-                for friend in friends:
-                    if users_ids[user] == friend:
-                        if as_edgelist:
-                            edgelist.append((id, user))
-                        else:
-                            matrix[id][user] = 1
+
+        friends = [friend["id"] for friend in response]
+        for user in range(len(users_ids)):
+            for friend in friends:
+                if users_ids[user] == friend:
+                    if as_edgelist:
+                        edgelist.append((id, user))
+                    else:
+                        matrix[id][user] = 1
     if as_edgelist:
         return edgelist
     else:
