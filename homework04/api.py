@@ -77,6 +77,6 @@ def messages_get_history(user_id, offset=0, count=300):
         if count < 200:
             break
         else:
-            time.sleep(1)
+            time.sleep(0.34)
             count -= 200
     return messages
