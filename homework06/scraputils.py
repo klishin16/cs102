@@ -31,6 +31,7 @@ def extract_next_page(parser):
     next_page_url = parser.find("a", {"class": "morelink"})['href']
     return next_page_url
 
+
 def get_news(url, n_pages=1):
     """ Collect news from a given web page """
     news = []
@@ -45,8 +46,4 @@ def get_news(url, n_pages=1):
         n_pages -= 1
     return news
 
-
-if __name__ == '__main__':
-    news = get_news("https://news.ycombinator.com/newest", 2)
-    print(len(news))
 
