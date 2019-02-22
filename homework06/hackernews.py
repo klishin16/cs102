@@ -12,7 +12,7 @@ from bayes import NaiveBayesClassifier
 @route("/news")
 def news_list():
     s = session()
-    rows = s.query(News).filter(News.label is None).all()
+    rows = s.query(News).filter(News.label == None).all()
     return template('news_template', rows=rows)
 
 
@@ -28,7 +28,7 @@ def add_label():
 @route("/update")
 def update_news():
     s = session()
-    latest_news = get_news("https://news.ycombinator.com/newest", n_pages=15)
+    latest_news = get_news("https://news.ycombinator.com/newest", n_pages=1)
     titles = [new['title'] for new in latest_news]
     authors = [new['author'] for new in latest_news]
     existing_news = s.query(News).filter(and_((News.author.in_(authors)), (News.title.in_(titles)))).all()
@@ -48,12 +48,12 @@ def clean(s):
 @route("/classify")
 def classify_news():
     s = session()
-    labeled_news = s.query(News).filter(News.label is not None).all()
+    labeled_news = s.query(News).filter(News.label != None).all()
     x = [clean(new.title) for new in labeled_news]
-    Y = [new.label for new in labeled_news]
+    y = [new.label for new in labeled_news]
     model = NaiveBayesClassifier()
     model.fit(x, y)
-    unlabeled_news = s.query(News).filter(News.label is None).all()
+    unlabeled_news = s.query(News).filter(News.label == None).all()
     good = []
     maybe = []
     never = []
