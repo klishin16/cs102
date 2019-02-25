@@ -43,10 +43,10 @@ class NaiveBayesClassifier:
         d = len(self.possible_words)
         return (nic + alpha) / (nc + alpha * d)
 
-    def predict(self, X):
+    def predict(self, x):
         """ Perform classification on an array of test vectors X. """
         results = []
-        for sentence in X:
+        for sentence in x:
             labels_likelihood = []
             words = sentence.split()
             for label in self.possible_labels:

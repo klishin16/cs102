@@ -11,8 +11,8 @@ session = sessionmaker(bind=engine)
 
 def convert(news):
     s = session()
-    for new in news:
-        addnew = News(**new)
+    for cur_new in news:
+        addnew = News(**cur_new)
         s.add(addnew)
     s.commit()
 

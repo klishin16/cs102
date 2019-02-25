@@ -32,7 +32,6 @@ def update_news():
     titles = [new['title'] for new in latest_news]
     authors = [new['author'] for new in latest_news]
     existing_news = s.query(News).filter(and_((News.author.in_(authors)), (News.title.in_(titles)))).all()
-    print(len(existing_news))
     for item in latest_news:
         if item['title'] not in [n.title for n in existing_news] and item['author'] not in [n.author for n in existing_news]:
             s.add(News(**item))
@@ -57,14 +56,15 @@ def classify_news():
     good = []
     maybe = []
     never = []
-    for new in unlabeled_news:
-        [prediction] = model.predict([clean(new.title)])
-        if prediction == 'good':
-            good.append(new)
-        elif prediction == 'maybe':
-            maybe.append(new)
+    titles = [clean(current_new.title) for current_new in unlabeled_news]
+    predictions = model.predict(titles)
+    for i, current_news in zip(range(len(unlabeled_news)), unlabeled_news):
+        if predictions[i] == 'good':
+            good.append(current_news)
+        elif predictions[i] == 'maybe':
+            maybe.append(current_news)
         else:
-            never.append(new)
+            never.append(current_news)
     return template('recommendations', good=good, maybe=maybe, never=never)
 
 

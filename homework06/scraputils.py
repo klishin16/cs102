@@ -46,4 +46,3 @@ def get_news(url, n_pages=1):
         n_pages -= 1
     return news
 
-
