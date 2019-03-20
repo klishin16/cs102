@@ -32,7 +32,7 @@ def extract_next_page(parser):
     return next_page_url
 
 
-def get_news(url, n_pages=1):
+def get_news(url, n_pages=5):
     """ Collect news from a given web page """
     news = []
     while n_pages:
