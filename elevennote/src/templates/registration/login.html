@@ -1,0 +1,7 @@
+<form action="{% url 'accounts:login' %}" method="post" accept-charset="utf-8">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="hidden" name="next" value="{{ next }}" />
+  <input class="button small" type="submit" value="Submit"/>
+</form>
+<a href="{% url 'accounts:register' %}">Create a new user</a>x
