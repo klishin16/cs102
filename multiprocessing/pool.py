@@ -22,7 +22,6 @@ class ProcessPool:
         manager = multiprocessing.Manager()
         self.return_values = manager.dict()
         print('Доступная память:', self.mem_usage, 'Кбайт')
-        self.info()
 
     def map(self, function, big_data):
         self.queue = queue.Queue()
@@ -40,7 +39,6 @@ class ProcessPool:
             self.max_workers = min(self.max_workers, math.floor(self.mem_usage / max_worker_mem))
             if self.max_workers < self.min_workers:
                 raise MemoryError("Недостаточно памяти для создания минимального количества потоков")
-                exit(-1)
             print('Максимальное возможное число потоков: ', self.max_workers)
             while not self.queue.empty() or self.workers > 0:
                 for process in self.processes:
@@ -102,7 +100,7 @@ def heavy_computation(data_chunk):
 
 
 if __name__ == '__main__':
-    big_data = [np.random.random((50, 50, 50)).tostring() for i in range(14)]
+    big_data = [np.random.random((40, 40, 40)).tostring() for i in range(14)]
     pool = ProcessPool()
     results = pool.map(heavy_computation, big_data)
     print(len(results))

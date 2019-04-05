@@ -20,5 +20,5 @@ urlpatterns = [
     path('', RedirectView.as_view(url='notes/'), name='index'),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls', namespace='accounts')),
-    path('notes/', include('notes.urls', namespace='notes'))
+    path('notes/', include('notes.urls', namespace='notes')),
 ]

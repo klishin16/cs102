@@ -20,7 +20,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'notes',
     'accounts',
+    'widget_tweaks',
+    'django_wysiwyg',
+    'rest_framework',
 ]
+DJANGO_WYSIWYG_FLAVOR = "ckeditor"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,13 +84,26 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = '/static'
+STATICFILES_DIRS = [
+    root('static'),
+]
 
 AUTH_USER_MODEL = 'accounts.User'
+
+LOGIN_REDIRECT_URL = '/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
 
 
